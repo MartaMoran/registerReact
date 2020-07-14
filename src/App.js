@@ -15,6 +15,7 @@ function App() {
   const [errorLAstName, setErrorLastName]=useState('');
   const [errorMail, setErrorMail]=useState('');
   const [errorPhone, setErrorPhone]=useState('');
+  const [errorSex, setErrorSex]=useState('');
   
   const handleChangeInputName=(event)=>{
     setName(event.target.value)
@@ -31,7 +32,28 @@ function App() {
   const handleInputSex=(event)=>{
     setSex(event.target.value)
   }
+  const handleSubmit=(event)=>{
+    event.preventDefault()
+    if(name.length===0){
+      setErrorName('Nombre vacío')
+    }
+    if (lastName.length===0){
+      setErrorLastName('apellidos vacío')
+    }
+    if(mail.includes('@')===false){
+      setErrorMail('email no válido')
+    }
+    if (mail.length<=3){
+      setErrorMail('email vacío')
+    }
+    if (isNaN(phone)){
+      setErrorPhone('teléfono no válido')
+    }
+    if (sex==='') {
+      setErrorSex('Debes marcar una casilla')
+    }
 
+  }
   useEffect(()=>{
     if (name.length<=1){
       setErrorName('Escribe tu nombre')
@@ -92,7 +114,8 @@ function App() {
         <InputRadio title="masculino" type="radio" onChange={handleInputSex} name="sex" value="masc" />
         <InputRadio title="femenino" type="radio" onChange={handleInputSex} name="sex" value="fem" />
         <InputRadio  title="Otro" type="radio" onChange={handleInputSex} name="sex" value="other"/>
-        <InputSubmit type="submit" value="Enviar"/>
+        <h6 style={{color:'red'}}>{errorSex}</h6>
+        <InputSubmit onClick={handleSubmit} type="submit" value="Enviar"/>
       
     </form>
   );
